@@ -11,7 +11,7 @@ namespace KataTest
         Item item2 = new Item() { Sku = "B15", Price = 0.30m };
         Item item3 = new Item() { Sku = "C40", Price = 0.60m };
         [TestMethod]
-        public void TotalPriceOneItem()
+        public void TestTotalPriceOneItem()
         {
             var checkout = new Checkout();
             checkout.Scan(item1);
@@ -19,7 +19,7 @@ namespace KataTest
             Assert.AreEqual(0.50m, total);
         }
         [TestMethod]
-        public void TotalPriceThreeItem()
+        public void TestTotalPriceThreeItem()
         {
             var checkout = new Checkout();
             checkout.Scan(item1);
@@ -27,6 +27,17 @@ namespace KataTest
             checkout.Scan(item3);
             var total = checkout.Total();
             Assert.AreEqual(1.40m, total);
+        }
+
+        [TestMethod]
+        public void TestOfferOne()
+        {
+            var checkout = new Checkout();
+            checkout.Scan(item1);
+            checkout.Scan(item1);
+            checkout.Scan(item1);
+            var total = checkout.Total();
+            Assert.AreEqual(1.30m, total);
         }
     }
 }

@@ -25,9 +25,12 @@ namespace Kata
                     {
                         offersAccepted.Add(offer);
                     }
-                    itemsNotInOffer.AddRange(items.Where(o => o.Sku == offer.Sku).Take(itemsNotInOfferCount));
                 }
+                itemsNotInOffer.AddRange(items.Where(o => o.Sku == offer.Sku).Take(itemsNotInOfferCount));
             }
+            var skusInOffers = offers.Select(o => o.Sku);
+            var itemsSkuNotInOffers = items.Where(i => !skusInOffers.Contains(i.Sku));
+            itemsNotInOffer.AddRange(itemsSkuNotInOffers);
             return offersAccepted.Sum(o => o.Price) + itemsNotInOffer.Sum(i => i.Price);
         }
 
