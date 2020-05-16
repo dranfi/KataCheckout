@@ -9,9 +9,26 @@ namespace Kata
     public class Checkout
     {
         private List<Item> items = new List<Item>();
+        private readonly Offer[] offers = { new Offer("A99", 3, 1.30m), new Offer("B15", 2, 0.45m) };
         public decimal Total()
         {
-            return items.Sum(i => i.Price);
+            var offersAccepted = new List<Offer>();
+            var itemsNotInOffer = new List<Item>();
+            foreach(var offer in offers)
+            {
+                var foundItems = items.Where(o => o.Sku == offer.Sku).Count();
+                var offerCount = foundItems / offer.Quantity;
+                var itemsNotInOfferCount = foundItems % offer.Quantity;
+                if(offerCount > 0)
+                {
+                    for(int i = 0; i < offerCount; i++)
+                    {
+                        offersAccepted.Add(offer);
+                    }
+                    itemsNotInOffer.AddRange(items.Where(o => o.Sku == offer.Sku).Take(itemsNotInOfferCount));
+                }
+            }
+            return offersAccepted.Sum(o => o.Price) + itemsNotInOffer.Sum(i => i.Price);
         }
 
         public void Scan(Item item)
