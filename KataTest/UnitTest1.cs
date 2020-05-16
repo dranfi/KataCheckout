@@ -39,5 +39,47 @@ namespace KataTest
             var total = checkout.Total();
             Assert.AreEqual(1.30m, total);
         }
+        [TestMethod]
+        public void TestOfferTwo()
+        {
+            var checkout = new Checkout();
+            checkout.Scan(item2);
+            checkout.Scan(item2);
+            var total = checkout.Total();
+            Assert.AreEqual(0.45m, total);
+        }
+        [TestMethod]
+        public void TestOfferOnePlusItemOne()
+        {
+            var checkout = new Checkout();
+            checkout.Scan(item1);
+            checkout.Scan(item1);
+            checkout.Scan(item1);
+            checkout.Scan(item1);
+            var total = checkout.Total();
+            Assert.AreEqual(1.80m, total);
+        }
+        [TestMethod]
+        public void TestOfferOnePlusItemTwo()
+        {
+            var checkout = new Checkout();
+            checkout.Scan(item1);
+            checkout.Scan(item1);
+            checkout.Scan(item1);
+            checkout.Scan(item2);
+            var total = checkout.Total();
+            Assert.AreEqual(1.60m, total);
+        }
+        [TestMethod]
+        public void TestOfferOnePlusItemThree()
+        {
+            var checkout = new Checkout();
+            checkout.Scan(item1);
+            checkout.Scan(item1);
+            checkout.Scan(item1);
+            checkout.Scan(item3);
+            var total = checkout.Total();
+            Assert.AreEqual(1.90m, total);
+        }
     }
 }
